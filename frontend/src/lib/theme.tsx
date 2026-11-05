@@ -15,7 +15,7 @@ function initialTheme(): Theme {
   } catch {
     /* ignore */
   }
-  return 'light'
+  return 'dark'
 }
 
 interface ThemeContextValue {

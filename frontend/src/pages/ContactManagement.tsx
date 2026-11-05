@@ -103,27 +103,58 @@ function StatusPicker({
 }
 
 function MessageModal({ submission, onClose }: { submission: ContactSubmission; onClose: () => void }) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [onClose])
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-0 sm:items-center sm:p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Message from ${submission.name}`}
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/70 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))] sm:p-4"
       onClick={onClose}
     >
-      <div className="card max-h-[90vh] w-full max-w-lg overflow-y-auto !rounded-b-none pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:!rounded-3xl sm:pb-5" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="card my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-lg overflow-y-auto overscroll-contain !rounded-3xl"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 className="text-lg font-bold text-white">{submission.name}</h2>
+          <div className="min-w-0">
+            <h2 className="truncate text-lg font-bold text-white">{submission.name}</h2>
             <a
               href={`mailto:${submission.email}`}
-              className="mono text-xs text-lime hover:underline"
+              className="mono block truncate text-xs text-lime hover:underline"
             >
               {submission.email}
             </a>
           </div>
-          <span className={`pill ${statusClass(submission.status)}`}>{statusLabel(submission.status)}</span>
+          <div className="flex shrink-0 items-center gap-2">
+            <span className={`pill ${statusClass(submission.status)}`}>{statusLabel(submission.status)}</span>
+            <button
+              type="button"
+              aria-label="Close message"
+              className="flex h-8 w-8 items-center justify-center rounded-xl border border-edge bg-panel2/60 text-slate-400 transition hover:border-red-400/40 hover:text-red-300"
+              onClick={onClose}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-4 w-4">
+                <path d="m6 6 12 12M18 6 6 18" />
+              </svg>
+            </button>
+          </div>
         </div>
         <div className="mt-4 rounded-2xl border border-edge bg-panel2/40 p-4">
           <div className="text-[10px] uppercase tracking-wider text-slate-500">Message</div>
-          <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-slate-300">
+          <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-relaxed text-slate-300">
             {submission.message || 'No message provided.'}
           </p>
         </div>
