@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: mlm-admin
+    runtime: node
+    # Free is fine to start; switch to "starter" before sharing publicly.
+    plan: free
+    region: singapore
+    buildCommand: npm --prefix backend ci && npm --prefix frontend ci && npm --prefix frontend run build
+    startCommand: npm --prefix backend start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Vite 8 needs Node 20.19+/22.12+; pin a known-good LTS.
+      - key: NODE_VERSION
+        value: "22"
+      - key: MIN_PAYOUT
+        value: "500"
+      - key: POINT_VALUE_INR
+        value: "12"
+      # Set these in the Render dashboard (marked sync:false = not stored in git).
+      - key: DB_URL
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: APP_URL
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASS
+        sync: false
