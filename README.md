@@ -1,7 +1,6 @@
 # Growth — MLM Marketing Platform
 
-Production-style MLM platform built with **React 19 + Vite + TypeScript + Tailwind CSS 4** on the frontend and **Node.js + Express + MongoDB** on the backend. The legacy EJS frontend has been removed; all pages are served by the React SPA at `/app`.
-
+Production-style MLM platform built with **React 19 + Vite + TypeScript + Tailwind CSS 4** on the frontend and **Node.js + Express + MongoDB** on the backend.
 ## Features
 
 - Referral network with spillover placement and invite links
