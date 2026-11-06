@@ -110,7 +110,7 @@ export default function Transactions() {
       if (filter !== 'all' && txnDirection(txn) !== filter) return false
       if (!search) return true
       return [txn.type, txnLabel(txn.type), txn.from, txn.to]
-        .some((value) => value.toLowerCase().includes(search))
+        .some((value) => String(value ?? '').toLowerCase().includes(search))
     })
   }, [txns, filter, query])
 

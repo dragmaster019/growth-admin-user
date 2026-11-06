@@ -172,6 +172,20 @@ export default function Calculator() {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null
+      const tag = target?.tagName
+      if (
+        event.defaultPrevented ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.altKey ||
+        target?.isContentEditable ||
+        tag === 'INPUT' ||
+        tag === 'TEXTAREA' ||
+        tag === 'SELECT'
+      ) {
+        return
+      }
       const map: Record<string, string> = {
         Enter: '=',
         '=': '=',

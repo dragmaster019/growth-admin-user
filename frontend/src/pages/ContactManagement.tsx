@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api } from '../lib/api'
 import { useAuth } from '../lib/auth'
-import { Empty, ErrorBox, PageHeader, Spinner } from '../components/ui'
+import { Empty, ErrorBox, Modal, PageHeader, Spinner } from '../components/ui'
 
 type Status = 'new' | 'contacted' | 'completed'
 
@@ -103,65 +103,22 @@ function StatusPicker({
 }
 
 function MessageModal({ submission, onClose }: { submission: ContactSubmission; onClose: () => void }) {
-  useEffect(() => {
-    const previousOverflow = document.body.style.overflow
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-    document.body.style.overflow = 'hidden'
-    document.addEventListener('keydown', onKeyDown)
-    return () => {
-      document.body.style.overflow = previousOverflow
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [onClose])
-
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={`Message from ${submission.name}`}
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/70 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))] sm:p-4"
-      onClick={onClose}
-    >
-      <div
-        className="card my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-lg overflow-y-auto overscroll-contain !rounded-3xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            <h2 className="truncate text-lg font-bold text-white">{submission.name}</h2>
-            <a
-              href={`mailto:${submission.email}`}
-              className="mono block truncate text-xs text-lime hover:underline"
-            >
+    <Modal
+      onClose={onClose}
+      title={
+        <div className="min-w-0">
+          <h2 className="truncate text-lg font-bold text-white">{submission.name}</h2>
+          <div className="mt-1 flex flex-wrap items-center gap-2">
+            <a href={`mailto:${submission.email}`} className="mono truncate text-xs text-lime hover:underline">
               {submission.email}
             </a>
-          </div>
-          <div className="flex shrink-0 items-center gap-2">
             <span className={`pill ${statusClass(submission.status)}`}>{statusLabel(submission.status)}</span>
-            <button
-              type="button"
-              aria-label="Close message"
-              className="flex h-8 w-8 items-center justify-center rounded-xl border border-edge bg-panel2/60 text-slate-400 transition hover:border-red-400/40 hover:text-red-300"
-              onClick={onClose}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-4 w-4">
-                <path d="m6 6 12 12M18 6 6 18" />
-              </svg>
-            </button>
           </div>
         </div>
-        <div className="mt-4 rounded-2xl border border-edge bg-panel2/40 p-4">
-          <div className="text-[10px] uppercase tracking-wider text-slate-500">Message</div>
-          <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-relaxed text-slate-300">
-            {submission.message || 'No message provided.'}
-          </p>
-        </div>
-        <div className="mt-3 text-[11px] text-slate-500">
-          Received {formatDate(submission.createdAt)}
-        </div>
-        <div className="mt-5 grid grid-cols-2 gap-2 sm:flex sm:justify-end">
+      }
+      footer={
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:justify-end">
           <button type="button" className="btn-ghost" onClick={onClose}>
             Close
           </button>
@@ -169,8 +126,18 @@ function MessageModal({ submission, onClose }: { submission: ContactSubmission; 
             Email lead
           </a>
         </div>
+      }
+    >
+      <div className="rounded-2xl border border-edge bg-panel2/40 p-4">
+        <div className="text-[10px] uppercase tracking-wider text-slate-500">Message</div>
+        <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-relaxed text-slate-300">
+          {submission.message || 'No message provided.'}
+        </p>
       </div>
-    </div>
+      <div className="mt-3 text-[11px] text-slate-500">
+        Received {formatDate(submission.createdAt)}
+      </div>
+    </Modal>
   )
 }
 

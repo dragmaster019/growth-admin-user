@@ -1,59 +1,14 @@
-import { useCallback, useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
 import { api } from '../lib/api'
 import { useAuth } from '../lib/auth'
 import type { Leg, Role, User } from '../lib/types'
-import { Empty, ErrorBox, PageHeader, Spinner, money } from '../components/ui'
+import { Empty, ErrorBox, Modal, PageHeader, Spinner, money } from '../components/ui'
 
 const legClasses: Record<Leg, string> = {
   ROOT: 'border-edge bg-panel2/70 text-slate-400',
   LEFT: 'border-lime/40 bg-lime/10 text-lime',
   MIDDLE: 'border-neon/40 bg-neon/10 text-neon',
   RIGHT: 'border-magenta/40 bg-magenta/10 text-magenta',
-}
-
-function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
-  useEffect(() => {
-    const previousOverflow = document.body.style.overflow
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-    document.body.style.overflow = 'hidden'
-    document.addEventListener('keydown', onKeyDown)
-    return () => {
-      document.body.style.overflow = previousOverflow
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [onClose])
-
-  return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={title}
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/70 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))] sm:p-4"
-      onClick={onClose}
-    >
-      <div
-        className="card my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-md overflow-y-auto overscroll-contain !rounded-3xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <h2 className="text-lg font-semibold text-white">{title}</h2>
-          <button
-            type="button"
-            aria-label="Close dialog"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-edge bg-panel2/60 text-slate-400 transition hover:border-red-400/40 hover:text-red-300"
-            onClick={onClose}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-4 w-4">
-              <path d="m6 6 12 12M18 6 6 18" />
-            </svg>
-          </button>
-        </div>
-        {children}
-      </div>
-    </div>
-  )
 }
 
 export default function Users() {
@@ -327,9 +282,19 @@ export default function Users() {
       )}
 
       {target && (
-        <Modal title="Give points" onClose={() => setTarget(null)}>
-          <form onSubmit={adjust}>
-            <p className="mt-1 text-sm text-slate-400">
+        <Modal
+          maxWidth="max-w-md"
+          onClose={() => setTarget(null)}
+          title={<h2 className="text-lg font-semibold text-white">Give points</h2>}
+          footer={
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:justify-end">
+              <button type="button" className="btn-ghost" onClick={() => setTarget(null)}>Cancel</button>
+              <button type="submit" form="points-form" className="btn-primary">Apply</button>
+            </div>
+          }
+        >
+          <form id="points-form" onSubmit={adjust}>
+            <p className="text-sm text-slate-400">
               {target.name} · current balance <span className="text-emerald-300">{money(target.points)}</span>
             </p>
             <div className="mt-4 grid gap-3">
@@ -347,18 +312,26 @@ export default function Users() {
                 </select>
               </div>
             </div>
-            <div className="mt-5 grid grid-cols-2 gap-2 sm:flex sm:justify-end">
-              <button type="button" className="btn-ghost" onClick={() => setTarget(null)}>Cancel</button>
-              <button className="btn-primary">Apply</button>
-            </div>
           </form>
         </Modal>
       )}
 
       {editTarget && (
-        <Modal title="Edit member" onClose={() => setEditTarget(null)}>
-          <form onSubmit={saveEdit}>
-            <p className="mt-1 text-sm text-slate-400">
+        <Modal
+          maxWidth="max-w-md"
+          onClose={() => setEditTarget(null)}
+          title={<h2 className="text-lg font-semibold text-white">Edit member</h2>}
+          footer={
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:justify-end">
+              <button type="button" className="btn-ghost" onClick={() => setEditTarget(null)}>Cancel</button>
+              <button type="submit" form="edit-user-form" className="btn-primary" disabled={busy}>
+                {busy ? 'Saving…' : 'Save changes'}
+              </button>
+            </div>
+          }
+        >
+          <form id="edit-user-form" onSubmit={saveEdit}>
+            <p className="text-sm text-slate-400">
               Update {editTarget.name}&apos;s account details.
             </p>
             <div className="mt-4 grid gap-3">
@@ -412,19 +385,22 @@ export default function Users() {
                 )}
               </div>
             </div>
-            <div className="mt-5 grid grid-cols-2 gap-2 sm:flex sm:justify-end">
-              <button type="button" className="btn-ghost" onClick={() => setEditTarget(null)}>Cancel</button>
-              <button className="btn-primary" disabled={busy}>
-                {busy ? 'Saving…' : 'Save changes'}
-              </button>
-            </div>
           </form>
         </Modal>
       )}
 
       {resetResult && (
-        <Modal title="Temporary password" onClose={() => setResetResult(null)}>
-          <p className="mt-1 text-sm text-slate-400">
+        <Modal
+          maxWidth="max-w-md"
+          onClose={() => setResetResult(null)}
+          title={<h2 className="text-lg font-semibold text-white">Temporary password</h2>}
+          footer={
+            <div className="grid gap-2 sm:flex sm:justify-end">
+              <button type="button" className="btn-primary" onClick={() => setResetResult(null)}>Done</button>
+            </div>
+          }
+        >
+          <p className="text-sm text-slate-400">
             Share this with {resetResult.name}. It will not be shown again.
           </p>
           <div className="mt-4 flex items-center gap-2 rounded-xl border border-edge bg-panel2/60 p-3">
@@ -436,9 +412,6 @@ export default function Users() {
           <p className="mt-3 text-xs text-slate-500">
             The member can sign in with this password and change it from their profile.
           </p>
-          <div className="mt-5 grid gap-2 sm:flex sm:justify-end">
-            <button type="button" className="btn-primary" onClick={() => setResetResult(null)}>Done</button>
-          </div>
         </Modal>
       )}
     </>

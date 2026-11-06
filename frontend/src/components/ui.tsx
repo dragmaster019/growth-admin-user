@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { RANKS } from '../lib/rank'
 
 export function Spinner({ label }: { label?: string }) {
@@ -108,4 +109,66 @@ export function RankBadge({
 
 export function money(n: number | null | undefined) {
   return Number(n || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })
+}
+
+export function Modal({
+  title,
+  onClose,
+  children,
+  footer,
+  maxWidth = 'max-w-lg',
+}: {
+  title: ReactNode
+  onClose: () => void
+  children: ReactNode
+  footer?: ReactNode
+  maxWidth?: string
+}) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [onClose])
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-[80] flex items-end justify-center bg-black/75 backdrop-blur-sm sm:items-center sm:p-4"
+      onClick={onClose}
+    >
+      <div
+        className={`card flex max-h-[100dvh] w-full ${maxWidth} flex-col overflow-hidden !rounded-b-none !p-0 sm:max-h-[calc(100dvh-2rem)] sm:!rounded-3xl`}
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-edge/60 px-4 pb-3 pt-[max(1rem,env(safe-area-inset-top))] sm:px-5 sm:pt-5">
+          <div className="min-w-0 flex-1">{title}</div>
+          <button
+            type="button"
+            aria-label="Close dialog"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-edge bg-panel2/60 text-slate-400 transition hover:border-red-400/40 hover:text-red-300"
+            onClick={onClose}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-4 w-4">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </div>
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5">{children}</div>
+        {footer && (
+          <div className="shrink-0 border-t border-edge/60 bg-panel/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur sm:px-5 sm:pb-4">
+            {footer}
+          </div>
+        )}
+      </div>
+    </div>,
+    document.body,
+  )
 }
