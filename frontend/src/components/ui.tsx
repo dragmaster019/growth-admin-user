@@ -1,6 +1,7 @@
 import { useEffect, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { RANKS } from '../lib/rank'
+import { lockBodyScroll } from '../lib/scrollLock'
 
 export function Spinner({ label }: { label?: string }) {
   return (
@@ -125,14 +126,13 @@ export function Modal({
   maxWidth?: string
 }) {
   useEffect(() => {
-    const previousOverflow = document.body.style.overflow
+    const releaseScroll = lockBodyScroll()
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose()
     }
-    document.body.style.overflow = 'hidden'
     document.addEventListener('keydown', onKeyDown)
     return () => {
-      document.body.style.overflow = previousOverflow
+      releaseScroll()
       document.removeEventListener('keydown', onKeyDown)
     }
   }, [onClose])

@@ -1,6 +1,7 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
+import { lockBodyScroll, resetBodyScroll } from '../lib/scrollLock'
 import { rankProgress } from '../lib/rank'
 import { DEFAULT_POINT_VALUE_INR, formatInr, pointsToInr } from '../lib/points'
 import type { User } from '../lib/types'
@@ -256,6 +257,7 @@ export default function Layout() {
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   useEffect(() => {
+    resetBodyScroll()
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
   }, [pathname])
 
@@ -269,11 +271,7 @@ export default function Layout() {
 
   useEffect(() => {
     if (!drawerOpen) return
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = previous
-    }
+    return lockBodyScroll()
   }, [drawerOpen])
 
   async function handleLogout() {
