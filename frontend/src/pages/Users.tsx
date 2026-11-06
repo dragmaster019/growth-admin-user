@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useCallback, useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { api } from '../lib/api'
 import { useAuth } from '../lib/auth'
 import type { Leg, Role, User } from '../lib/types'
@@ -9,6 +9,51 @@ const legClasses: Record<Leg, string> = {
   LEFT: 'border-lime/40 bg-lime/10 text-lime',
   MIDDLE: 'border-neon/40 bg-neon/10 text-neon',
   RIGHT: 'border-magenta/40 bg-magenta/10 text-magenta',
+}
+
+function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [onClose])
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/70 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))] sm:p-4"
+      onClick={onClose}
+    >
+      <div
+        className="card my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-md overflow-y-auto overscroll-contain !rounded-3xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <h2 className="text-lg font-semibold text-white">{title}</h2>
+          <button
+            type="button"
+            aria-label="Close dialog"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-edge bg-panel2/60 text-slate-400 transition hover:border-red-400/40 hover:text-red-300"
+            onClick={onClose}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-4 w-4">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </div>
+        {children}
+      </div>
+    </div>
+  )
 }
 
 export default function Users() {
@@ -42,8 +87,8 @@ export default function Users() {
     const search = query.trim().toLowerCase()
     if (!search) return users
     return users.filter((u) =>
-      [u.name, u.email, u.referralCode, u.position, u.role]
-        .some((value) => value.toLowerCase().includes(search)),
+      [u.name, u.email, u.referralCode, u.position, u.role, u.mobile, u.Id]
+        .some((value) => String(value ?? '').toLowerCase().includes(search)),
     )
   }, [users, query])
 
@@ -282,9 +327,8 @@ export default function Users() {
       )}
 
       {target && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-0 sm:items-center sm:p-4" onClick={() => setTarget(null)}>
-          <form onSubmit={adjust} className="card max-h-[90vh] w-full max-w-md overflow-y-auto !rounded-b-none pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:!rounded-3xl sm:pb-5" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-lg font-semibold text-white">Give points</h2>
+        <Modal title="Give points" onClose={() => setTarget(null)}>
+          <form onSubmit={adjust}>
             <p className="mt-1 text-sm text-slate-400">
               {target.name} · current balance <span className="text-emerald-300">{money(target.points)}</span>
             </p>
@@ -308,13 +352,12 @@ export default function Users() {
               <button className="btn-primary">Apply</button>
             </div>
           </form>
-        </div>
+        </Modal>
       )}
 
       {editTarget && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-0 sm:items-center sm:p-4" onClick={() => setEditTarget(null)}>
-          <form onSubmit={saveEdit} className="card max-h-[90vh] w-full max-w-md overflow-y-auto !rounded-b-none pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:!rounded-3xl sm:pb-5" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-lg font-semibold text-white">Edit member</h2>
+        <Modal title="Edit member" onClose={() => setEditTarget(null)}>
+          <form onSubmit={saveEdit}>
             <p className="mt-1 text-sm text-slate-400">
               Update {editTarget.name}&apos;s account details.
             </p>
@@ -376,30 +419,27 @@ export default function Users() {
               </button>
             </div>
           </form>
-        </div>
+        </Modal>
       )}
 
       {resetResult && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-0 sm:items-center sm:p-4" onClick={() => setResetResult(null)}>
-          <div className="card max-h-[90vh] w-full max-w-md overflow-y-auto !rounded-b-none pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:!rounded-3xl sm:pb-5" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-lg font-semibold text-white">Temporary password</h2>
-            <p className="mt-1 text-sm text-slate-400">
-              Share this with {resetResult.name}. It will not be shown again.
-            </p>
-            <div className="mt-4 flex items-center gap-2 rounded-xl border border-edge bg-panel2/60 p-3">
-              <code className="mono flex-1 break-all text-sm text-emerald-300">{resetResult.tempPassword}</code>
-              <button type="button" className="btn-ghost !px-3 !py-1.5 text-xs" onClick={copyTempPassword}>
-                {copied ? 'Copied' : 'Copy'}
-              </button>
-            </div>
-            <p className="mt-3 text-xs text-slate-500">
-              The member can sign in with this password and change it from their profile.
-            </p>
-            <div className="mt-5 grid gap-2 sm:flex sm:justify-end">
-              <button type="button" className="btn-primary" onClick={() => setResetResult(null)}>Done</button>
-            </div>
+        <Modal title="Temporary password" onClose={() => setResetResult(null)}>
+          <p className="mt-1 text-sm text-slate-400">
+            Share this with {resetResult.name}. It will not be shown again.
+          </p>
+          <div className="mt-4 flex items-center gap-2 rounded-xl border border-edge bg-panel2/60 p-3">
+            <code className="mono flex-1 break-all text-sm text-emerald-300">{resetResult.tempPassword}</code>
+            <button type="button" className="btn-ghost !px-3 !py-1.5 text-xs" onClick={copyTempPassword}>
+              {copied ? 'Copied' : 'Copy'}
+            </button>
           </div>
-        </div>
+          <p className="mt-3 text-xs text-slate-500">
+            The member can sign in with this password and change it from their profile.
+          </p>
+          <div className="mt-5 grid gap-2 sm:flex sm:justify-end">
+            <button type="button" className="btn-primary" onClick={() => setResetResult(null)}>Done</button>
+          </div>
+        </Modal>
       )}
     </>
   )

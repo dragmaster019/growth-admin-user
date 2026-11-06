@@ -241,7 +241,8 @@ export default function ContactManagement() {
   const search = query.trim().toLowerCase()
   const visible = search
     ? byStatus.filter((s) =>
-        [s.name, s.email, s.message].some((value) => value.toLowerCase().includes(search)),
+        [s.name, s.email, s.message, statusLabel(s.status)]
+          .some((value) => String(value ?? '').toLowerCase().includes(search)),
       )
     : byStatus
 
