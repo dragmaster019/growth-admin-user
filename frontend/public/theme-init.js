@@ -1,7 +1,9 @@
 try {
   var savedTheme = localStorage.getItem('mlm-theme')
-  document.documentElement.dataset.theme =
-    savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : 'dark'
+  var theme = savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : 'dark'
+  document.documentElement.dataset.theme = theme
+  var scheme = document.querySelector('meta[name="color-scheme"]')
+  if (scheme) scheme.setAttribute('content', theme)
 } catch {
   document.documentElement.dataset.theme = 'dark'
 }
