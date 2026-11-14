@@ -6,6 +6,7 @@ import { rankProgress } from '../lib/rank'
 import { DEFAULT_POINT_VALUE_INR, formatInr, pointsToInr } from '../lib/points'
 import type { User } from '../lib/types'
 import ThemeToggle from './ThemeToggle'
+import SiteFooter from './SiteFooter'
 import { RankBadge, money } from './ui'
 
 const icon = (paths: ReactNode) => (
@@ -383,11 +384,12 @@ export default function Layout() {
         <span className="hidden sm:inline">Menu</span>
       </button>
 
-      <main className="relative mx-auto w-full max-w-7xl px-4 pb-28 pt-5 sm:px-6 sm:pt-6 lg:px-10 lg:py-10">
+      <main className="relative mx-auto w-full max-w-7xl px-4 pb-16 pt-5 sm:px-6 sm:pt-6 lg:px-10 lg:py-10">
         <div className="fade-up">
           <Outlet />
         </div>
       </main>
+      <SiteFooter />
     </div>
   )
 }

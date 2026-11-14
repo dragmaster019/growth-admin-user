@@ -539,16 +539,19 @@ export default function WhyJoin() {
               Growth<span className="text-lime">.</span> — build your circle, earn your points.
             </span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link to="/about" className="hover:text-lime">
+              About
+            </Link>
+            <Link to="/contact" className="hover:text-lime">
+              Contact
+            </Link>
             <Link to="/login" className="hover:text-lime">
               Log in
             </Link>
             <Link to="/join" className="hover:text-lime">
               Join
             </Link>
-            <a href="#interest" className="hover:text-lime">
-              Contact
-            </a>
           </div>
         </footer>
       </main>

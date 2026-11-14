@@ -9,6 +9,8 @@ import ResetPassword from './pages/ResetPassword'
 import Join from './pages/Join'
 import JoinSuccess from './pages/JoinSuccess'
 import WhyJoin from './pages/WhyJoin'
+import About from './pages/About'
+import Contact from './pages/Contact'
 import ContactManagement from './pages/ContactManagement'
 import Dashboard from './pages/Dashboard'
 import Tree from './pages/Tree'
@@ -44,6 +46,8 @@ export default function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/why-join" element={<WhyJoin />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
       <Route path="/join" element={<Join />} />
       <Route path="/join-success" element={<JoinSuccess />} />
 
