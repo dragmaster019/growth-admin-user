@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import PublicHeader from '../components/PublicHeader'
-import SiteFooter from '../components/SiteFooter'
 import SocialLinks from '../components/SocialLinks'
 import { api } from '../lib/api'
 
@@ -167,7 +166,6 @@ export default function Contact() {
         </section>
       </main>
 
-      <SiteFooter />
     </div>
   )
 }

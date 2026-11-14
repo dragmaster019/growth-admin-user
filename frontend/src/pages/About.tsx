@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import PublicHeader from '../components/PublicHeader'
-import SiteFooter from '../components/SiteFooter'
 import SocialLinks from '../components/SocialLinks'
 
 const stats = [
@@ -185,7 +184,6 @@ export default function About() {
         </section>
       </main>
 
-      <SiteFooter />
     </div>
   )
 }

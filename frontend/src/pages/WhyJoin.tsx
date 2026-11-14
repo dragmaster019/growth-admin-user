@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../lib/api'
+import SocialLinks from '../components/SocialLinks'
 
 const stats = [
   { value: '3', label: 'legs per member', hint: 'Left, Middle and Right' },
@@ -539,19 +540,22 @@ export default function WhyJoin() {
               Growth<span className="text-lime">.</span> — build your circle, earn your points.
             </span>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link to="/about" className="hover:text-lime">
-              About
-            </Link>
-            <Link to="/contact" className="hover:text-lime">
-              Contact
-            </Link>
-            <Link to="/login" className="hover:text-lime">
-              Log in
-            </Link>
-            <Link to="/join" className="hover:text-lime">
-              Join
-            </Link>
+          <div className="flex flex-col items-center gap-3 sm:items-end">
+            <SocialLinks />
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link to="/about" className="hover:text-lime">
+                About
+              </Link>
+              <Link to="/contact" className="hover:text-lime">
+                Contact
+              </Link>
+              <Link to="/login" className="hover:text-lime">
+                Log in
+              </Link>
+              <Link to="/join" className="hover:text-lime">
+                Join
+              </Link>
+            </div>
           </div>
         </footer>
       </main>
