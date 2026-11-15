@@ -1,7 +1,8 @@
-import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState, type FormEvent } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { api } from '../lib/api'
-import SocialLinks from '../components/SocialLinks'
+import PublicFooter from '../components/PublicFooter'
+import PublicHeader from '../components/PublicHeader'
 
 const stats = [
   { value: '3', label: 'legs per member', hint: 'Left, Middle and Right' },
@@ -153,6 +154,17 @@ export default function WhyJoin() {
   const [error, setError] = useState('')
   const [sent, setSent] = useState(false)
   const [busy, setBusy] = useState(false)
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (!hash) return
+    const target = document.getElementById(decodeURIComponent(hash.slice(1)))
+    if (!target) return
+    const timer = window.setTimeout(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 0)
+    return () => window.clearTimeout(timer)
+  }, [hash])
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -183,32 +195,12 @@ export default function WhyJoin() {
   }
 
   return (
-    <div className="relative min-h-[100dvh] overflow-hidden">
+    <div className="relative min-h-[100dvh] overflow-x-clip">
       <div className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rounded-full bg-lime/15 blur-3xl animate-floaty" />
       <div className="pointer-events-none absolute -right-20 top-40 h-96 w-96 rounded-full bg-neon/10 blur-3xl animate-floaty-slow" />
       <div className="pointer-events-none absolute left-1/3 top-[38rem] h-72 w-72 rounded-full bg-magenta/10 blur-3xl" />
 
-      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 sm:py-5">
-        <Link to="/login" className="flex items-center gap-3">
-          <span className="brand-mark">G</span>
-          <span>
-            <span className="block text-lg font-black leading-none tracking-tight text-white">
-              Growth<span className="text-lime">.</span>
-            </span>
-            <span className="mt-0.5 hidden text-[10px] uppercase tracking-[0.22em] text-slate-500 min-[380px]:block">
-              Campus network
-            </span>
-          </span>
-        </Link>
-        <nav className="flex items-center gap-2">
-          <Link to="/login" className="btn-ghost !px-3 !py-2 text-xs sm:text-sm">
-            Log in
-          </Link>
-          <Link to="/join" className="btn-primary !px-3 !py-2 text-xs sm:text-sm">
-            Join now
-          </Link>
-        </nav>
-      </header>
+      <PublicHeader />
 
       <main className="relative z-10 mx-auto max-w-6xl px-4 pb-[calc(5rem+env(safe-area-inset-bottom))] sm:px-6">
         <section className="fade-up grid items-center gap-8 py-8 sm:gap-10 sm:py-10 lg:grid-cols-[1.1fr_0.9fr] lg:py-16">
@@ -313,7 +305,7 @@ export default function WhyJoin() {
           </div>
         </section>
 
-        <section className="mt-12 grid gap-6 sm:mt-16 lg:grid-cols-[0.9fr_1.1fr]">
+        <section id="how" className="mt-12 scroll-mt-28 grid gap-6 sm:mt-16 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="card">
             <span className="pill">How it works</span>
             <h2 className="mt-4 text-2xl font-black tracking-tight text-white">
@@ -385,7 +377,7 @@ export default function WhyJoin() {
           </div>
         </section>
 
-        <section className="mt-12 sm:mt-16">
+        <section id="stories" className="mt-12 scroll-mt-28 sm:mt-16">
           <div className="grid gap-4 sm:grid-cols-3">
             {testimonials.map((item) => (
               <div key={item.name} className="card">
@@ -402,7 +394,7 @@ export default function WhyJoin() {
           </div>
         </section>
 
-        <section className="mt-12 grid gap-6 sm:mt-16 lg:grid-cols-[1fr_1fr]">
+        <section id="faq" className="mt-12 scroll-mt-28 grid gap-6 sm:mt-16 lg:grid-cols-[1fr_1fr]">
           <div>
             <span className="pill">Questions</span>
             <h2 className="mt-4 text-3xl font-black tracking-tight text-white">
@@ -423,7 +415,7 @@ export default function WhyJoin() {
             </div>
           </div>
 
-          <div id="interest" className="card scroll-mt-6">
+          <div id="interest" className="card scroll-mt-28">
             <span className="pill">Interested?</span>
             <h2 className="mt-4 text-2xl font-black tracking-tight text-white">
               Request a callback.
@@ -533,32 +525,9 @@ export default function WhyJoin() {
           </div>
         </section>
 
-        <footer className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-edge pt-6 text-xs text-slate-500 sm:mt-16 sm:flex-row">
-          <div className="flex items-center gap-2">
-            <span className="brand-mark !h-7 !w-7 !rounded-lg !text-xs">G</span>
-            <span>
-              Growth<span className="text-lime">.</span> — build your circle, earn your points.
-            </span>
-          </div>
-          <div className="flex flex-col items-center gap-3 sm:items-end">
-            <SocialLinks />
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link to="/about" className="hover:text-lime">
-                About
-              </Link>
-              <Link to="/contact" className="hover:text-lime">
-                Contact
-              </Link>
-              <Link to="/login" className="hover:text-lime">
-                Log in
-              </Link>
-              <Link to="/join" className="hover:text-lime">
-                Join
-              </Link>
-            </div>
-          </div>
-        </footer>
       </main>
+
+      <PublicFooter />
     </div>
   )
 }

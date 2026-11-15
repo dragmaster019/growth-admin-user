@@ -48,7 +48,7 @@ const steps = [
 
 export default function About() {
   return (
-    <div className="relative min-h-[100dvh] overflow-hidden">
+    <div className="relative min-h-[100dvh] overflow-x-clip">
       <div className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rounded-full bg-lime/15 blur-3xl animate-floaty" />
       <div className="pointer-events-none absolute -right-20 top-40 h-96 w-96 rounded-full bg-neon/10 blur-3xl animate-floaty-slow" />
       <div className="pointer-events-none absolute left-1/3 top-[42rem] h-72 w-72 rounded-full bg-magenta/10 blur-3xl" />
