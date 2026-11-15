@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
+import Spotlight from './components/Spotlight'
 import ThemeToggle from './components/ThemeToggle'
 import { Spinner } from './components/ui'
 import { useAuth } from './lib/auth'
@@ -40,6 +41,7 @@ function Protected() {
 export default function App() {
   return (
     <>
+      <Spotlight />
       <ThemeToggle />
       <Routes>
       <Route path="/login" element={<Login />} />
