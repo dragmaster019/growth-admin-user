@@ -14,7 +14,7 @@ const legColor: Record<Leg, string> = {
   LEFT: 'var(--color-lime)',
   MIDDLE: 'var(--color-neon)',
   RIGHT: 'var(--color-magenta)',
-  ROOT: '#64748b',
+  ROOT: '#6f947f',
 }
 
 const legClass: Record<Leg, string> = {

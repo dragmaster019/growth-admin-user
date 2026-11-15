@@ -18,57 +18,57 @@ const links: { to: string; label: string; icon: ReactNode; accent: string; admin
   {
     to: '/dashboard',
     label: 'Dashboard',
-    accent: '#8b5cf6',
+    accent: '#2fbe64',
     icon: icon(<><rect x="3" y="3" width="7" height="7" rx="2" /><rect x="14" y="3" width="7" height="7" rx="2" /><rect x="3" y="14" width="7" height="7" rx="2" /><rect x="14" y="14" width="7" height="7" rx="2" /></>),
   },
   {
     to: '/tree',
     label: 'Network',
-    accent: '#ec4899',
+    accent: '#07ab5f',
     icon: icon(<><circle cx="12" cy="4" r="2" /><circle cx="5" cy="20" r="2" /><circle cx="19" cy="20" r="2" /><path d="M12 6v5M5 18v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3" /></>),
   },
   {
     to: '/leaderboard',
     label: 'Leaderboard',
-    accent: '#f59e0b',
+    accent: '#5fd184',
     icon: icon(<><path d="m3 7 4 4 5-7 5 7 4-4-2 12H5L3 7Z" /></>),
   },
   {
     to: '/payouts',
     label: 'Payouts',
-    accent: '#10b981',
+    accent: '#8fd4a4',
     icon: icon(<><path d="M12 3v18M17 7H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></>),
   },
   {
     to: '/calculator',
     label: 'Calculator',
-    accent: '#0ea5e9',
+    accent: '#a7d8b5',
     icon: icon(<><rect x="4" y="3" width="16" height="18" rx="3" /><path d="M8 7h8M8 12h2M12 12h2M16 12h.01M8 16h2M12 16h2M16 16h.01" /></>),
   },
   {
     to: '/transactions',
     label: 'Transactions',
-    accent: '#06b6d4',
+    accent: '#669f76',
     icon: icon(<><path d="M4 7h16M4 12h16M4 17h10" /></>),
   },
   {
     to: '/users',
     label: 'Users',
-    accent: '#3b82f6',
+    accent: '#4cbf7a',
     adminOnly: true,
     icon: icon(<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.9" /><path d="M16 3.1a4 4 0 0 1 0 7.8" /></>),
   },
   {
     to: '/contact-management',
     label: 'Contacts',
-    accent: '#14b8a6',
+    accent: '#a7d8b5',
     adminOnly: true,
     icon: icon(<><path d="M4 4h16v16H4z" /><path d="m4 7 8 6 8-6" /></>),
   },
   {
     to: '/profile',
     label: 'Profile',
-    accent: '#f97316',
+    accent: '#d4ac9c',
     icon: icon(<><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></>),
   },
 ]
@@ -159,25 +159,32 @@ function BoostCard({
 }) {
   if (!user || compact) return null
   return (
-    <div className="boost-card relative mt-4 shrink-0 overflow-hidden rounded-2xl border border-white/10 p-3.5">
+    <div className="boost-card relative mt-4 shrink-0 overflow-hidden rounded-2xl border border-[#f4fbf6]/10 p-3.5">
       <div className="relative z-10">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[10px] font-black uppercase tracking-[0.18em] text-white/70">Level up</span>
-          <RankBadge rank={user.rank} emoji={user.rankEmoji} className="!border-white/25 !bg-white/10 !text-white" />
+          <span className="text-[10px] font-black uppercase tracking-[0.18em] text-[#f4fbf6]/70">Level up</span>
+          <RankBadge
+            rank={user.rank}
+            emoji={user.rankEmoji}
+            className="!border-[#f4fbf6]/25 !bg-[#f4fbf6]/10 !text-[#f4fbf6]"
+          />
         </div>
-        <div className="mt-2 text-sm font-black text-white">
+        <div className="mt-2 text-sm font-black text-[#f4fbf6]">
           {progress.next ? `Next up: ${progress.next.name} ${progress.next.emoji}` : 'Max rank unlocked 🔥'}
         </div>
-        <div className="mt-1 text-[11px] text-white/65">
+        <div className="mt-1 text-[11px] text-[#f4fbf6]/65">
           {progress.next ? `${money(progress.remaining)} points to go` : 'You are officially a legend.'}
         </div>
         <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-black/20">
           <div
-            className="h-full rounded-full bg-white/90"
+            className="h-full rounded-full bg-[#f4fbf6]/90"
             style={{ width: `${Math.max(5, progress.progress)}%` }}
           />
         </div>
-        <Link to="/leaderboard" className="mt-2.5 inline-flex text-[11px] font-bold text-white/80 hover:text-white">
+        <Link
+          to="/leaderboard"
+          className="mt-2.5 inline-flex text-[11px] font-bold text-[#f4fbf6]/80 hover:text-[#f4fbf6]"
+        >
           See leaderboard →
         </Link>
       </div>
@@ -222,7 +229,7 @@ function UserCard({
           <div className="truncate text-sm font-semibold text-white">{user.name}</div>
           <div className="truncate text-[11px] text-slate-400">{user.email}</div>
         </div>
-        <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399]" />
+        <span className="h-2 w-2 shrink-0 rounded-full bg-lime shadow-[0_0_10px_#2fbe64]" />
       </div>
       <div className="mt-2.5 flex items-center justify-between gap-2">
         <RankBadge rank={user.rank} emoji={user.rankEmoji} className="!border-white/20 !bg-white/10 !text-white" />
@@ -377,7 +384,7 @@ export default function Layout() {
         onClick={() => setDrawerOpen(true)}
         aria-label="Open menu"
         title="Open menu"
-        className="fab-menu fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-40 flex h-12 w-12 items-center justify-center gap-2 rounded-full text-xs font-black uppercase tracking-wide text-white sm:h-auto sm:w-auto sm:px-4 sm:py-3 lg:hidden"
+        className="fab-menu fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-40 flex h-12 w-12 items-center justify-center gap-2 rounded-full text-xs font-black uppercase tracking-wide text-[#f4fbf6] sm:h-auto sm:w-auto sm:px-4 sm:py-3 lg:hidden"
       >
         <Sparkle />
         <span className="hidden sm:inline">Menu</span>

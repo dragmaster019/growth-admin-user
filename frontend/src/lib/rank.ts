@@ -7,12 +7,12 @@ export interface Rank {
 }
 
 export const RANKS: Rank[] = [
-  { key: 'rookie', name: 'Rookie', min: 0, color: '#22d3ee', emoji: '🌱' },
-  { key: 'hustler', name: 'Hustler', min: 500, color: '#818cf8', emoji: '⚡' },
-  { key: 'creator', name: 'Creator', min: 2000, color: '#f472b6', emoji: '🎨' },
-  { key: 'leader', name: 'Leader', min: 5000, color: '#fbbf24', emoji: '👑' },
-  { key: 'mogul', name: 'Mogul', min: 10000, color: '#34d399', emoji: '💎' },
-  { key: 'legend', name: 'Legend', min: 25000, color: '#fb7185', emoji: '🔥' },
+  { key: 'rookie', name: 'Rookie', min: 0, color: '#a7d8b5', emoji: '🌱' },
+  { key: 'hustler', name: 'Hustler', min: 500, color: '#8fd4a4', emoji: '⚡' },
+  { key: 'creator', name: 'Creator', min: 2000, color: '#5fd184', emoji: '🎨' },
+  { key: 'leader', name: 'Leader', min: 5000, color: '#2fbe64', emoji: '👑' },
+  { key: 'mogul', name: 'Mogul', min: 10000, color: '#07ab5f', emoji: '💎' },
+  { key: 'legend', name: 'Legend', min: 25000, color: '#d4ac9c', emoji: '🔥' },
 ]
 
 export function rankForPoints(points: number | null | undefined): Rank {
