@@ -8,14 +8,14 @@ const SEGMENT_PCT = 100 / 8
 
 // Values must match backend/src/utils/luckyDraw.js
 const PRIZES = [
-  { value: 10, color: '#2fbe64' },
-  { value: 50, color: '#07ab5f' },
-  { value: 5, color: '#1a6837' },
-  { value: 100, color: '#669f76' },
-  { value: 25, color: '#8fd4a4' },
-  { value: 250, color: '#d4ac9c' },
-  { value: 20, color: '#a7d8b5' },
-  { value: 75, color: '#2e866a' },
+  { value: 10, color: '#4f46e5' },
+  { value: 50, color: '#0ea5e9' },
+  { value: 5, color: '#14b8a6' },
+  { value: 100, color: '#8b5cf6' },
+  { value: 25, color: '#f59e0b' },
+  { value: 250, color: '#ec4899' },
+  { value: 20, color: '#10b981' },
+  { value: 75, color: '#f97316' },
 ]
 
 const GRADIENT = PRIZES.map(

@@ -6,36 +6,36 @@
   --color-panel2: #10291a;
   --color-edge: #1e412b;
   --color-lime: #2fbe64;
-  --color-neon: #07ab5f;
-  --color-magenta: #d4ac9c;
-  --color-white: #f4fbf6;
-  --color-slate-100: #eaf7ef;
-  --color-slate-200: #d5e9dc;
-  --color-slate-300: #b3d0be;
-  --color-slate-400: #8eb09c;
-  --color-slate-500: #6f947f;
-  --color-slate-600: #587563;
+  --color-neon: #22d3ee;
+  --color-magenta: #ff5c8a;
+  --color-white: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
   --font-display: "Work Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-heading: "Work Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
 :root {
-  --grad-brand: linear-gradient(135deg, #07ab5f 0%, #2fbe64 54%, #8fe0aa 100%);
-  --grad-text: linear-gradient(120deg, #ecf8ef 0%, #8fe0aa 46%, #2fbe64 100%);
+  --grad-brand: linear-gradient(135deg, #07ab5f 0%, #2fbe64 48%, #b8ff3d 100%);
+  --grad-text: linear-gradient(120deg, #f8fafc 0%, #b8ff3d 40%, #22d3ee 72%, #ff5c8a 100%);
   --grad-surface: linear-gradient(165deg, #0c2215 0%, #08190f 55%, #06120a 100%);
-  --shadow-card: 0 1px 0 rgba(244, 251, 246, 0.04), 0 24px 60px -36px rgba(0, 0, 0, 0.95);
+  --shadow-card: 0 1px 0 rgba(248, 250, 252, 0.04), 0 24px 60px -36px rgba(0, 0, 0, 0.95);
   --glow-brand: 0 16px 44px -18px rgba(47, 190, 100, 0.45);
   --btn-text: #04130a;
-  --nav-active-text: #04130a;
-  --hero-glow-1: rgba(47, 190, 100, 0.2);
-  --hero-glow-2: rgba(7, 171, 95, 0.14);
-  --hero-glow-3: rgba(212, 172, 156, 0.1);
+  --nav-active-text: #ffffff;
+  --hero-glow-1: rgba(47, 190, 100, 0.22);
+  --hero-glow-2: rgba(34, 211, 238, 0.14);
+  --hero-glow-3: rgba(255, 92, 138, 0.12);
   --sidebar-mint: rgba(47, 190, 100, 0.15);
-  --sidebar-peach: rgba(212, 172, 156, 0.08);
-  --card-highlight: rgba(244, 251, 246, 0.07);
-  --body-glow-3: rgba(26, 104, 55, 0.2);
-  --body-dot: rgba(143, 212, 164, 0.1);
+  --sidebar-peach: rgba(255, 92, 138, 0.08);
+  --card-highlight: rgba(248, 250, 252, 0.07);
+  --body-glow-3: rgba(139, 92, 246, 0.16);
+  --body-dot: rgba(148, 163, 184, 0.1);
 }
 
 /*
@@ -50,37 +50,37 @@ html[data-theme="light"] {
   --color-panel2: #f3fbf6;
   --color-edge: #d5e8db;
 
-  --color-white: #062213;
-  --color-slate-100: #062213;
-  --color-slate-200: #0e2e1b;
-  --color-slate-300: #1c3b28;
-  --color-slate-400: #3f5c4b;
-  --color-slate-500: #5c7a68;
-  --color-slate-600: #7a9685;
+  --color-white: #0b1220;
+  --color-slate-100: #0b1220;
+  --color-slate-200: #1e293b;
+  --color-slate-300: #334155;
+  --color-slate-400: #475569;
+  --color-slate-500: #64748b;
+  --color-slate-600: #526078;
   --color-red-300: #b91c1c;
   --color-amber-300: #b45309;
   --color-emerald-300: #047857;
 
   --color-lime: #1a6837;
-  --color-neon: #07ab5f;
-  --color-magenta: #8a513e;
+  --color-neon: #0891b2;
+  --color-magenta: #db2777;
 
-  --grad-brand: linear-gradient(135deg, #0b5d32 0%, #1a6837 44%, #07ab5f 100%);
-  --grad-text: linear-gradient(120deg, #062213 0%, #1a6837 48%, #07ab5f 100%);
+  --grad-brand: linear-gradient(135deg, #0b5d32 0%, #0f766e 52%, #1a6837 100%);
+  --grad-text: linear-gradient(120deg, #062213 0%, #07ab5f 40%, #0891b2 72%, #db2777 100%);
   --grad-surface: linear-gradient(165deg, #ffffff 0%, #f8fdf9 58%, #ecf8ef 100%);
-  --shadow-card: 0 1px 2px rgba(6, 34, 19, 0.04), 0 1px 1px rgba(6, 34, 19, 0.03),
-    0 24px 60px -34px rgba(6, 34, 19, 0.24);
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 1px rgba(15, 23, 42, 0.03),
+    0 24px 60px -34px rgba(30, 41, 59, 0.28);
   --glow-brand: 0 14px 34px -16px rgba(7, 171, 95, 0.42);
   --btn-text: #ffffff;
-  --nav-active-text: #04130a;
+  --nav-active-text: #ffffff;
   --hero-glow-1: rgba(7, 171, 95, 0.14);
-  --hero-glow-2: rgba(47, 190, 100, 0.12);
-  --hero-glow-3: rgba(212, 172, 156, 0.1);
+  --hero-glow-2: rgba(8, 145, 178, 0.1);
+  --hero-glow-3: rgba(219, 39, 119, 0.08);
   --sidebar-mint: rgba(7, 171, 95, 0.12);
-  --sidebar-peach: rgba(212, 172, 156, 0.12);
+  --sidebar-peach: rgba(219, 39, 119, 0.08);
   --card-highlight: rgba(255, 255, 255, 0.92);
-  --body-glow-3: rgba(26, 104, 55, 0.1);
-  --body-dot: rgba(6, 34, 19, 0.045);
+  --body-glow-3: rgba(124, 58, 237, 0.08);
+  --body-dot: rgba(15, 23, 42, 0.045);
 }
 
 @layer base {
@@ -183,26 +183,27 @@ html[data-theme="light"] {
   }
   .sidebar-shell {
     background:
-      radial-gradient(280px 220px at -12% -4%, rgba(47, 190, 100, 0.3), transparent 70%),
-      radial-gradient(260px 230px at 112% 22%, rgba(212, 172, 156, 0.16), transparent 70%),
-      radial-gradient(320px 260px at 48% 112%, rgba(7, 171, 95, 0.22), transparent 70%),
+      radial-gradient(280px 220px at -12% -4%, rgba(47, 190, 100, 0.28), transparent 70%),
+      radial-gradient(260px 230px at 112% 22%, rgba(139, 92, 246, 0.24), transparent 70%),
+      radial-gradient(320px 260px at 48% 112%, rgba(34, 211, 238, 0.18), transparent 70%),
       radial-gradient(220px 240px at -20% 64%, var(--sidebar-mint), transparent 72%),
       radial-gradient(200px 220px at 118% 88%, var(--sidebar-peach), transparent 72%),
       var(--grad-surface);
     box-shadow: var(--shadow-card), inset 0 1px 0 var(--card-highlight);
   }
   .boost-card {
-    background: linear-gradient(145deg, #0b5d32 0%, #1a6837 46%, #07ab5f 100%);
+    background: linear-gradient(145deg, #0b5d32 0%, #0f766e 34%, #6d28d9 70%, #be185d 100%);
     box-shadow:
-      0 18px 40px -22px rgba(7, 171, 95, 0.8),
-      inset 0 1px 0 rgba(244, 251, 246, 0.24);
+      0 18px 40px -22px rgba(109, 40, 217, 0.75),
+      0 6px 20px -12px rgba(190, 24, 93, 0.6),
+      inset 0 1px 0 rgba(248, 250, 252, 0.28);
   }
   .fab-menu {
-    background: linear-gradient(135deg, #1a6837 0%, #07ab5f 58%, #2fbe64 100%);
+    background: linear-gradient(135deg, #07ab5f 0%, #0e7490 46%, #6d28d9 78%, #be185d 100%);
     box-shadow:
-      0 18px 40px -14px rgba(7, 171, 95, 0.65),
-      0 6px 18px -10px rgba(47, 190, 100, 0.7),
-      inset 0 1px 0 rgba(244, 251, 246, 0.32);
+      0 18px 40px -14px rgba(14, 116, 144, 0.65),
+      0 6px 18px -10px rgba(109, 40, 217, 0.7),
+      inset 0 1px 0 rgba(248, 250, 252, 0.32);
     transition: transform 0.2s ease, filter 0.2s ease;
   }
   .fab-menu:hover {
@@ -395,26 +396,26 @@ html[data-theme="light"] {
   .nav-item-active {
     background: linear-gradient(
       135deg,
-      color-mix(in srgb, var(--nav-accent) 92%, #f4fbf6),
-      var(--nav-accent)
+      color-mix(in srgb, var(--nav-accent) 88%, #111827),
+      color-mix(in srgb, var(--nav-accent) 60%, #111827)
     );
     color: var(--nav-active-text);
     box-shadow:
-      0 16px 34px -16px color-mix(in srgb, var(--nav-accent) 72%, transparent),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      0 16px 34px -16px color-mix(in srgb, var(--nav-accent) 75%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.24);
   }
   .nav-item-active .nav-icon {
     color: var(--nav-active-text);
-    background: rgba(255, 255, 255, 0.28);
-    border-color: rgba(255, 255, 255, 0.36);
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.26);
   }
   .nav-item-active:hover {
     color: var(--nav-active-text);
     transform: none;
     background: linear-gradient(
       135deg,
-      color-mix(in srgb, var(--nav-accent) 92%, #f4fbf6),
-      var(--nav-accent)
+      color-mix(in srgb, var(--nav-accent) 88%, #111827),
+      color-mix(in srgb, var(--nav-accent) 60%, #111827)
     );
   }
   .brand-mark {
@@ -539,9 +540,9 @@ html[data-theme="light"] .table tbody tr:hover {
 
 html[data-theme="light"] .sidebar-shell {
   background:
-    radial-gradient(280px 220px at -12% -4%, rgba(47, 190, 100, 0.14), transparent 70%),
-    radial-gradient(260px 230px at 112% 22%, rgba(212, 172, 156, 0.12), transparent 70%),
-    radial-gradient(320px 260px at 48% 112%, rgba(7, 171, 95, 0.1), transparent 70%),
+    radial-gradient(280px 220px at -12% -4%, rgba(7, 171, 95, 0.16), transparent 70%),
+    radial-gradient(260px 230px at 112% 22%, rgba(139, 92, 246, 0.12), transparent 70%),
+    radial-gradient(320px 260px at 48% 112%, rgba(8, 145, 178, 0.1), transparent 70%),
     radial-gradient(220px 240px at -20% 64%, var(--sidebar-mint), transparent 72%),
     radial-gradient(200px 220px at 118% 88%, var(--sidebar-peach), transparent 72%),
     linear-gradient(165deg, #ffffff 0%, #f8fdf9 58%, #ecf8ef 100%);
