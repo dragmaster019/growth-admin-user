@@ -341,10 +341,9 @@ export default function WhyJoin() {
                     alt={item.alt}
                     loading="lazy"
                     decoding="async"
-                    className="h-full w-full object-cover brightness-[0.72] saturate-[0.7] transition duration-700 group-hover:scale-[1.04] group-hover:brightness-90"
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
-                  <div className="absolute inset-0 bg-lime/20 mix-blend-color" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
                   <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-lime/70 to-transparent" />
                   <span className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-lime/40 bg-ink/80 font-mono text-[11px] font-semibold text-lime backdrop-blur">
                     {String(index + 1).padStart(2, '0')}
