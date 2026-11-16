@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { api } from '../lib/api'
 import PublicFooter from '../components/PublicFooter'
 import PublicHeader from '../components/PublicHeader'
+import { Modal } from '../components/ui'
 
 const stats = [
   { value: '3', label: 'legs per member', hint: 'Left, Middle and Right' },
@@ -39,6 +40,7 @@ const benefits = [
 ]
 
 const inspiration = (name: string) => `${import.meta.env.BASE_URL}inspiration/${name}`
+const review = (name: string) => `${import.meta.env.BASE_URL}reviews/${name}`
 
 const steps = [
   {
@@ -105,12 +107,24 @@ const campusPlays = [
   },
 ]
 
-const testimonials = [
+type Testimonial = {
+  name: string
+  role: string
+  quote: string
+  video?: string
+  poster?: string
+  demo?: boolean
+}
+
+const testimonials: Testimonial[] = [
   {
     name: 'Ananya',
-    role: '3rd year, Computer Science',
+    role: 'AI demo persona · Computer Science',
     quote:
       'I started with two friends from my hostel. Six weeks later my first leg is full and the points paid for almost all of my last product order.',
+    video: review('growth-demo-avatar.mp4'),
+    poster: review('growth-demo-avatar.jpg'),
+    demo: true,
   },
   {
     name: 'Rohit',
@@ -164,6 +178,7 @@ export default function WhyJoin() {
   const [error, setError] = useState('')
   const [sent, setSent] = useState(false)
   const [busy, setBusy] = useState(false)
+  const [activeReview, setActiveReview] = useState<Testimonial | null>(null)
   const { hash } = useLocation()
 
   useEffect(() => {
@@ -412,18 +427,57 @@ export default function WhyJoin() {
 
         <section id="stories" className="mt-12 scroll-mt-28 sm:mt-16">
           <div className="grid gap-4 sm:grid-cols-3">
-            {testimonials.map((item) => (
-              <div key={item.name} className="card">
-                <div className="flex items-center gap-3">
-                  <span className="avatar">{item.name.slice(0, 1)}</span>
-                  <div>
-                    <div className="text-sm font-semibold text-white">{item.name}</div>
-                    <div className="text-[11px] text-slate-500">{item.role}</div>
+            {testimonials.map((item) => {
+              const card = (
+                <>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="avatar">{item.name.slice(0, 1)}</span>
+                      <div>
+                        <div className="text-sm font-semibold text-white">{item.name}</div>
+                        <div className="text-[11px] text-slate-500">{item.role}</div>
+                      </div>
+                    </div>
+                    {item.demo && (
+                      <span className="rounded-full border border-lime/30 bg-lime/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-lime">
+                        AI demo
+                      </span>
+                    )}
                   </div>
+                  <p className="mt-4 text-sm leading-relaxed text-slate-400">“{item.quote}”</p>
+                  {item.video && (
+                    <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-lime">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-lime/30 bg-lime/10">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="h-3.5 w-3.5 translate-x-px"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </span>
+                      Watch AI review
+                    </span>
+                  )}
+                </>
+              )
+
+              return item.video ? (
+                <button
+                  key={item.name}
+                  type="button"
+                  onClick={() => setActiveReview(item)}
+                  className="card card-hover w-full text-left"
+                  aria-label={`Play ${item.name}'s AI demo review`}
+                >
+                  {card}
+                </button>
+              ) : (
+                <div key={item.name} className="card">
+                  {card}
                 </div>
-                <p className="mt-4 text-sm leading-relaxed text-slate-400">“{item.quote}”</p>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </section>
 
@@ -559,6 +613,43 @@ export default function WhyJoin() {
         </section>
 
       </main>
+
+      {activeReview?.video && (
+        <Modal
+          title={
+            <div className="flex items-center gap-3">
+              <span className="avatar">{activeReview.name.slice(0, 1)}</span>
+              <div>
+                <div className="text-sm font-semibold text-white">{activeReview.name}</div>
+                <div className="text-[11px] text-slate-500">{activeReview.role}</div>
+              </div>
+            </div>
+          }
+          onClose={() => setActiveReview(null)}
+          maxWidth="max-w-3xl"
+        >
+          <div className="overflow-hidden rounded-2xl border border-edge bg-black">
+            <video
+              key={activeReview.video}
+              src={activeReview.video}
+              poster={activeReview.poster}
+              controls
+              autoPlay
+              playsInline
+              preload="metadata"
+              className="aspect-video w-full bg-black object-contain"
+            />
+          </div>
+          {activeReview.demo && (
+            <p className="mt-3 text-xs leading-relaxed text-slate-400">
+              <span className="mr-2 rounded-full border border-lime/30 bg-lime/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-lime">
+                AI demo
+              </span>
+              Synthetic demo review, not a real customer testimonial.
+            </p>
+          )}
+        </Modal>
+      )}
 
       <PublicFooter />
     </div>
