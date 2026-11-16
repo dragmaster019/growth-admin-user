@@ -36,6 +36,18 @@ const socials: SocialItem[] = [
     ),
   },
   {
+    label: 'GitHub',
+    description: 'Code, builds and the work behind Growth.',
+    href: SOCIAL_LINKS.github,
+    accent: 'hover:border-white/40 hover:text-white',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-2.5 1-2.5 4.5-1.5 6C2.5 9 2 10 2 11.5c0 3.5 2.5 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+        <path d="M9 18c-4.51 2-5-2-7-2" />
+      </svg>
+    ),
+  },
+  {
     label: 'WhatsApp',
     description: 'Quick questions? Message the team directly.',
     href: SOCIAL_LINKS.whatsapp,
