@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { api } from '../lib/api'
 import PublicFooter from '../components/PublicFooter'
@@ -179,6 +179,8 @@ export default function WhyJoin() {
   const [sent, setSent] = useState(false)
   const [busy, setBusy] = useState(false)
   const [activeReview, setActiveReview] = useState<Testimonial | null>(null)
+  const [autoplayMuted, setAutoplayMuted] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const { hash } = useLocation()
 
   useEffect(() => {
@@ -190,6 +192,27 @@ export default function WhyJoin() {
     }, 0)
     return () => window.clearTimeout(timer)
   }, [hash])
+
+  useEffect(() => {
+    if (!activeReview) return
+    const video = videoRef.current
+    if (!video) return
+    let cancelled = false
+    void video.play().catch(() => {
+      if (cancelled) return
+      video.muted = true
+      setAutoplayMuted(true)
+      void video.play().catch(() => {})
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [activeReview])
+
+  function closeReview() {
+    setActiveReview(null)
+    setAutoplayMuted(false)
+  }
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -625,21 +648,30 @@ export default function WhyJoin() {
               </div>
             </div>
           }
-          onClose={() => setActiveReview(null)}
+          onClose={closeReview}
           maxWidth="max-w-3xl"
         >
           <div className="overflow-hidden rounded-2xl border border-edge bg-black">
             <video
               key={activeReview.video}
+              ref={videoRef}
               src={activeReview.video}
               poster={activeReview.poster}
               controls
               autoPlay
               playsInline
               preload="metadata"
+              onVolumeChange={(event) => {
+                if (!event.currentTarget.muted) setAutoplayMuted(false)
+              }}
               className="aspect-video w-full bg-black object-contain"
             />
           </div>
+          {autoplayMuted && (
+            <p className="mt-3 text-xs leading-relaxed text-amber-300">
+              Autoplay started muted. Use the speaker icon in the player to hear the review.
+            </p>
+          )}
           {activeReview.demo && (
             <p className="mt-3 text-xs leading-relaxed text-slate-400">
               <span className="mr-2 rounded-full border border-lime/30 bg-lime/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-lime">
