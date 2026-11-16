@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
 
 const links = [
@@ -14,20 +14,18 @@ const itemClass =
   'relative shrink-0 px-3 py-2 text-[13px] font-medium text-slate-400 transition hover:text-white after:absolute after:inset-x-3 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-lime after:transition-transform after:duration-300 hover:after:scale-x-100'
 
 function NavItem({ to, label }: { to: string; label: string }) {
-  if (to.includes('#')) {
-    return (
-      <Link to={to} className={itemClass}>
-        {label}
-      </Link>
-    )
-  }
+  const { pathname, hash } = useLocation()
+  const [path, target] = to.split('#')
+  const isActive = pathname === path && (target ? hash === `#${target}` : hash === '')
+
   return (
-    <NavLink
+    <Link
       to={to}
-      className={({ isActive }) => `${itemClass} ${isActive ? 'text-white after:scale-x-100' : ''}`}
+      aria-current={isActive ? 'page' : undefined}
+      className={`${itemClass} ${isActive ? 'text-white after:scale-x-100' : ''}`}
     >
       {label}
-    </NavLink>
+    </Link>
   )
 }
 
