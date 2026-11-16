@@ -38,22 +38,32 @@ const benefits = [
   },
 ]
 
+const inspiration = (name: string) => `${import.meta.env.BASE_URL}inspiration/${name}`
+
 const steps = [
   {
     title: 'Get an invite code',
     body: 'Ask a friend who is already in the network for their referral code, or open an invite link they share with you.',
+    image: inspiration('step-invite.jpg'),
+    alt: 'Students laughing together around a laptop in a campus library',
   },
   {
     title: 'Create your account',
     body: 'Sign up with your name, email and password. You instantly get your own referral code and a place in the tree.',
+    image: inspiration('step-account.jpg'),
+    alt: 'Two people pointing at a laptop while setting up an account',
   },
   {
     title: 'Grow your three legs',
     body: 'Share your code with people you know. Each new member joins under your line and fills the first open leg — Left, Middle or Right.',
+    image: inspiration('step-team.jpg'),
+    alt: 'Three friends collaborating around a table with laptops',
   },
   {
     title: 'Earn and redeem',
     body: 'Join bonuses and product activity credit points to your wallet. Use them on drops or keep growing your circle.',
+    image: inspiration('step-reward.jpg'),
+    alt: 'A collaborative table filled with laptops, notebooks and phones',
   },
 ]
 
@@ -305,50 +315,74 @@ export default function WhyJoin() {
           </div>
         </section>
 
-        <section id="how" className="mt-12 scroll-mt-28 grid gap-6 sm:mt-16 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="card">
-            <span className="pill">How it works</span>
-            <h2 className="mt-4 text-2xl font-black tracking-tight text-white">
-              Four steps, no guesswork.
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-slate-400">
-              The tree does the placement. You focus on inviting genuine people and keeping your circle
-              active.
-            </p>
-            <div className="mt-6 space-y-4">
-              {steps.map((item, index) => (
-                <div key={item.title} className="flex gap-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-lime/40 bg-lime/10 text-xs font-black text-lime">
-                    {index + 1}
-                  </span>
-                  <div>
-                    <div className="text-sm font-semibold text-white">{item.title}</div>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-500">{item.body}</p>
-                  </div>
-                </div>
-              ))}
+        <section id="how" className="mt-12 scroll-mt-28 sm:mt-16">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <span className="pill">How it works</span>
+              <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl">
+                Four steps, no guesswork.
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-400">
+                The tree does the placement. You focus on inviting genuine people and keeping your
+                circle active.
+              </p>
             </div>
-            <Link to="/join" className="btn-primary mt-6 w-full">
+            <Link to="/join" className="btn-primary hidden shrink-0 sm:inline-flex">
               Create my account
             </Link>
           </div>
 
-          <div className="space-y-4">
-            <div className="card">
-              <span className="pill">Ways to earn</span>
-              <h2 className="mt-4 text-2xl font-black tracking-tight text-white">
-                Points move when your circle moves.
-              </h2>
-              <div className="mt-5 space-y-4">
-                {earnWays.map((item) => (
-                  <div key={item.title} className="rounded-2xl border border-edge bg-panel2/40 p-4">
-                    <div className="text-sm font-semibold text-white">{item.title}</div>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-500">{item.body}</p>
-                  </div>
-                ))}
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {steps.map((item, index) => (
+              <article key={item.title} className="card card-hover group overflow-hidden !p-0">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover brightness-[0.72] saturate-[0.7] transition duration-700 group-hover:scale-[1.04] group-hover:brightness-90"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+                  <div className="absolute inset-0 bg-lime/20 mix-blend-color" />
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-lime/70 to-transparent" />
+                  <span className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-lime/40 bg-ink/80 font-mono text-[11px] font-semibold text-lime backdrop-blur">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                <div className="p-4 sm:p-5">
+                  <h3 className="text-base font-bold text-white">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.body}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <Link to="/join" className="btn-primary mt-5 w-full sm:hidden">
+            Create my account
+          </Link>
+        </section>
+
+        <section className="mt-10 sm:mt-12">
+          <div className="card">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div className="max-w-2xl">
+                <span className="pill">Ways to earn</span>
+                <h2 className="mt-4 text-2xl font-black tracking-tight text-white sm:text-3xl">
+                  Points move when your circle moves.
+                </h2>
               </div>
+              <span className="pill self-start sm:self-auto">4 ways to earn</span>
             </div>
-            <div className="rounded-2xl border border-lime/30 bg-lime/5 p-4 text-xs leading-relaxed text-slate-400">
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              {earnWays.map((item) => (
+                <div key={item.title} className="rounded-2xl border border-edge bg-panel2/40 p-4">
+                  <div className="text-sm font-semibold text-white">{item.title}</div>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-500">{item.body}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 rounded-2xl border border-lime/30 bg-lime/5 p-4 text-xs leading-relaxed text-slate-400">
               <strong className="text-lime">Honest note:</strong> this is a referral and community
               model, not a guaranteed income. Points are an in-app reward currency, and results depend
               entirely on how many real people you invite and how active they choose to be.

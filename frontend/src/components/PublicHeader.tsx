@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
 
@@ -13,10 +14,11 @@ const links = [
 const itemClass =
   'relative shrink-0 px-3 py-2 text-[13px] font-medium text-slate-400 transition hover:text-white after:absolute after:inset-x-3 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-lime after:transition-transform after:duration-300 hover:after:scale-x-100'
 
-function NavItem({ to, label }: { to: string; label: string }) {
+function NavItem({ to, label, sectionHash }: { to: string; label: string; sectionHash: string | null }) {
   const { pathname, hash } = useLocation()
   const [path, target] = to.split('#')
-  const isActive = pathname === path && (target ? hash === `#${target}` : hash === '')
+  const currentHash = sectionHash === null ? hash : sectionHash
+  const isActive = pathname === path && (target ? currentHash === `#${target}` : currentHash === '')
 
   return (
     <Link
@@ -31,6 +33,36 @@ function NavItem({ to, label }: { to: string; label: string }) {
 
 export default function PublicHeader() {
   const { user } = useAuth()
+  const { pathname } = useLocation()
+  const [section, setSection] = useState({ path: '', hash: '' })
+
+  useEffect(() => {
+    if (pathname !== '/why-join') return
+    let frame = 0
+    const update = () => {
+      frame = 0
+      let current = ''
+      for (const id of ['how', 'stories', 'faq']) {
+        const target = document.getElementById(id)
+        if (target && target.getBoundingClientRect().top <= 180) current = `#${id}`
+      }
+      setSection((previous) =>
+        previous.path === pathname && previous.hash === current
+          ? previous
+          : { path: pathname, hash: current },
+      )
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [pathname])
+
+  const sectionHash = section.path === pathname ? section.hash : null
 
   return (
     <>
@@ -79,7 +111,7 @@ export default function PublicHeader() {
 
           <nav className="hidden items-center justify-center gap-0.5 lg:flex">
             {links.map((link) => (
-              <NavItem key={link.to} to={link.to} label={link.label} />
+              <NavItem key={link.to} to={link.to} label={link.label} sectionHash={sectionHash} />
             ))}
           </nav>
 
@@ -123,7 +155,7 @@ export default function PublicHeader() {
         <div className="border-t border-edge/60 lg:hidden">
           <nav className="scrollbar-hide mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-3 py-1.5">
             {links.map((link) => (
-              <NavItem key={link.to} to={link.to} label={link.label} />
+              <NavItem key={link.to} to={link.to} label={link.label} sectionHash={sectionHash} />
             ))}
           </nav>
         </div>
