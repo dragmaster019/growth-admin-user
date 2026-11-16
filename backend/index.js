@@ -28,7 +28,7 @@ app.use(
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
         imgSrc: ["'self'", "data:"],
         connectSrc: ["'self'"],
-        mediaSrc: ["'none'"],
+        mediaSrc: ["'self'"],
         frameSrc: ["'none'"],
         ...(isProd ? { upgradeInsecureRequests: [] } : { upgradeInsecureRequests: null }),
       },
