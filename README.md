@@ -25,5 +25,3 @@ MLM-admin-side/
 ├── backend/      # Express API, models, seed scripts
 └── frontend/     # React + Vite SPA (served at /app)
 ```
-
-**Repository:** [https://lnkd.in/gsXiuzsj](https://lnkd.in/gsXiuzsj)
