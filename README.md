@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/e7ba70c1-bc11-43ec-8617-5c98c21658c0
+
 # Growth — MLM Marketing Platform
 
 Production-style MLM platform built with **React 19 + Vite + TypeScript + Tailwind CSS 4** on the frontend and **Node.js + Express + MongoDB** on the backend.
